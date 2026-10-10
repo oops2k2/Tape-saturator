@@ -17,10 +17,14 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
 
+      - name: List results
+        run: Get-ChildItem -Path build -Recurse -Filter *.vst3 | Select-Object FullName
+
       - name: Upload plugin
         uses: actions/upload-artifact@v4
         with:
           name: TapeSat-Windows
+          if-no-files-found: error
           path: |
-            build/TapeSat_artefacts/Release/VST3/TapeSat.vst3
-            build/TapeSat_artefacts/Release/Standalone/TapeSat.exe
+            build/*_artefacts/Release/VST3/*.vst3
+            build/*_artefacts/Release/Standalone/*.exe
