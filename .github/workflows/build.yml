@@ -1,0 +1,26 @@
+name: Build TapeSat (Windows)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Configure
+        run: cmake -B build
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Upload plugin
+        uses: actions/upload-artifact@v4
+        with:
+          name: TapeSat-Windows
+          path: |
+            build/TapeSat_artefacts/Release/VST3/TapeSat.vst3
+            build/TapeSat_artefacts/Release/Standalone/TapeSat.exe
