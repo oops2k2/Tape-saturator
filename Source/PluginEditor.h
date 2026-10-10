@@ -25,8 +25,10 @@ public:
 
 private:
     void timerCallback() override;
-    static void drawReel (juce::Graphics&, juce::Point<float> centre, float radius, float angle);
+    static void drawReel (juce::Graphics&, juce::Point<float> centre, float flangeR,
+                          float packR, float angle, float vel);
     static void drawMeter (juce::Graphics&, juce::Rectangle<float> area, float level, const juce::String& name);
+    static void drawLogo (juce::Graphics&, juce::Rectangle<float> area);
 
     static constexpr int numKnobs = 7;
 
@@ -45,7 +47,12 @@ private:
     juce::Label speedLabel;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> speedAttachment;
 
+    // animacja szpul: kąt, prędkość kątowa (z bezwładnością), przepływ taśmy
     float reelAngle = 0.0f;
+    float reelVel = 0.0f;
+    float tapePhase = 0.0f;
+    float tapeFlow = 0.0f;
+
     float dispL = 0.0f, dispR = 0.0f;
     juce::Rectangle<int> headerArea;
 
